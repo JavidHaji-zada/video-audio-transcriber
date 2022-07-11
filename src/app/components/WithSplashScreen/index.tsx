@@ -2,6 +2,12 @@ import React from 'react';
 import { Button } from 'reactstrap';
 import styled from 'styled-components';
 
+const AppContainer = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+`;
+
 const Greeting = styled.div`
   height: 100vh;
   width: 100vw;
@@ -36,19 +42,20 @@ const WithSplashScreen = (props: {
     setIsReady(true);
   };
 
-  return isReady ? (
-    <>{children}</>
-  ) : (
-    <Greeting>
-      <GreetingText>
-        Hello Inji, I have been carefully developed by Javid (your much beloved
-        boyfriend) to transcribe your interviews
-      </GreetingText>
-      <Button color="primary" onClick={skip}>
-        Don't Skip
-      </Button>
-    </Greeting>
-  );
+  // return isReady ? (
+  //   <AppContainer>{children}</AppContainer>
+  // ) : (
+  //   <Greeting>
+  //     <GreetingText>
+  //       Hello Inji, I have been carefully developed by Javid (your much beloved
+  //       boyfriend) to transcribe your interviews
+  //     </GreetingText>
+  //     <Button color="primary" onClick={skip}>
+  //       Don't Skip
+  //     </Button>
+  //   </Greeting>
+  // );
+  return <AppContainer>{children}</AppContainer>;
 };
 
 export default WithSplashScreen;

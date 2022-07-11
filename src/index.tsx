@@ -49,9 +49,10 @@ ReactDOMClient.createRoot(MOUNT_NODE!).render(
   <Provider store={store}>
     <ThemeProvider>
       <HelmetProvider>
-        <React.StrictMode>
+        {/* <React.StrictMode>
           <App />
-        </React.StrictMode>
+        </React.StrictMode> */}
+        <App />
       </HelmetProvider>
     </ThemeProvider>
   </Provider>,

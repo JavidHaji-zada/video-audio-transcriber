@@ -12,10 +12,12 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import { GlobalStyle } from '../styles/global-styles';
 
-import { HomePage } from './pages/HomePage/Loadable';
+import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
 import WithSplashScreen from './components/WithSplashScreen';
+import NewUpload from './pages/NewUpload';
+import PastUploads from './pages/PastUploads';
 
 function App() {
   const { i18n } = useTranslation();
@@ -35,6 +37,16 @@ function App() {
             exact
             path={process.env.PUBLIC_URL + '/'}
             component={HomePage}
+          />
+          <Route
+            exact
+            path={process.env.PUBLIC_URL + '/uploads/new'}
+            component={NewUpload}
+          />
+          <Route
+            exact
+            path={process.env.PUBLIC_URL + '/uploads/past'}
+            component={PastUploads}
           />
           <Route component={NotFoundPage} />
         </Switch>
