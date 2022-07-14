@@ -68,7 +68,7 @@ function NewUpload(): JSX.Element {
 
       const videoStorageRef = ref(
         storage,
-        `/${FIREBASE_STORAGE_URL}/${docRef.id}/video.mp4`,
+        `/${FIREBASE_STORAGE_URL}/${docRef.id}/${docRef.id}.mp4`,
       );
 
       // progress can be paused and resumed. It also exposes progress updates.
@@ -100,6 +100,7 @@ function NewUpload(): JSX.Element {
             await updateDoc(doc(db, 'candidates', docRef.id), {
               file: downloadUrl,
               thumbnail: base64Thumbnail,
+              status: 'PENDING',
             });
             setAlert({
               message: 'Successfully created candidated case!',
