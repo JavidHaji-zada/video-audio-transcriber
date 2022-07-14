@@ -1,4 +1,5 @@
 export interface Candidate {
+  id: string;
   candidate: string;
   file: string;
   notes: string;

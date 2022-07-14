@@ -10,16 +10,9 @@ import {
   Label,
 } from 'reactstrap';
 import styled from 'styled-components';
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  getStorage,
-  uploadString,
-} from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import {
   doc,
-  setDoc,
   getFirestore,
   addDoc,
   collection,

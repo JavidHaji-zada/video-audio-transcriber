@@ -30,6 +30,7 @@ import FIREBASE_UTILS from 'utils/firebase';
 
 // Initialize languages
 import './locales/i18n';
+import { TranscriptionProvider } from 'app/context/Transcription';
 
 // Observe loading of Inter (to remove 'Inter', remove the <link> tag in
 // the index.html file and this observer)
@@ -52,7 +53,9 @@ ReactDOMClient.createRoot(MOUNT_NODE!).render(
         {/* <React.StrictMode>
           <App />
         </React.StrictMode> */}
-        <App />
+        <TranscriptionProvider>
+          <App />
+        </TranscriptionProvider>
       </HelmetProvider>
     </ThemeProvider>
   </Provider>,

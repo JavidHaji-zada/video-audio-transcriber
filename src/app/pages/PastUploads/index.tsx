@@ -1,22 +1,11 @@
 import React from 'react';
 import AppLayout from 'app/components/Layout';
-import {
-  Alert,
-  Button,
-  Form,
-  FormGroup,
-  FormText,
-  Input,
-  Label,
-} from 'reactstrap';
 import styled from 'styled-components';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc, getFirestore } from 'firebase/firestore';
-import FIREBASE_UTILS from 'utils/firebase';
-import { FIREBASE_STORAGE_URL } from 'utils/constants';
+import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs } from 'firebase/firestore';
 import { Candidate } from 'utils/types/app';
-import VIDEO_UTILS from 'utils/video';
+import { useTranscriptionContext } from 'app/context/Transcription';
+import { useHistory } from 'react-router-dom';
 
 const Title = styled.text`
   font-size: 36px;
@@ -45,7 +34,8 @@ const CandidateName = styled.text`
 `;
 
 function PastUploads(): JSX.Element {
-  const [candidates, setCandidates] = React.useState<Candidate[]>([]);
+  const { transcriptions, setTranscriptions } = useTranscriptionContext();
+  const history = useHistory();
 
   React.useEffect(() => {
     getUploads();
@@ -58,22 +48,24 @@ function PastUploads(): JSX.Element {
       const candidates: Candidate[] = [];
       querySnapshot.forEach(async doc => {
         const data: Candidate = doc.data() as Candidate;
-        // const thumbnail = await VIDEO_UTILS.getVideoCover(data.file);
-        // console.log({ thumbnail });
-        // data.thumbnail = thumbnail;
-        candidates.push(data);
+        candidates.push({ ...data, id: doc.id });
       });
-      setCandidates(candidates);
+      setTranscriptions(candidates);
     } catch (error) {
       console.log({ error });
     }
   };
 
-  console.log({ candidates });
+  const navigateToTranscription = (id: string) => {
+    history.push(`/uploads/${id}`);
+  };
 
   const renderCandidateBox = (candidate: Candidate) => {
     return (
-      <CandidateBox key={candidate.candidate}>
+      <CandidateBox
+        key={candidate.candidate}
+        onClick={() => navigateToTranscription(candidate.id)}
+      >
         <img style={{ width: 150, height: 100 }} src={candidate.thumbnail} />
         <CandidateName>{candidate.candidate}</CandidateName>
       </CandidateBox>
@@ -83,7 +75,7 @@ function PastUploads(): JSX.Element {
   return (
     <AppLayout>
       <Title>Past Uploads</Title>
-      <InnerContainer>{candidates.map(renderCandidateBox)}</InnerContainer>
+      <InnerContainer>{transcriptions.map(renderCandidateBox)}</InnerContainer>
     </AppLayout>
   );
 }
